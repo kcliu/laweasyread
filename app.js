@@ -1,13 +1,11 @@
 var express = require('express');
+var lawsdb = require('./lawsDB');
 var app = express();
 var msg = "API endpoint at <p>/laws/(law_abbr_name)</p>";
 app.get('/', function(req, res){
 	  res.send(msg);
 });
-app.get('/laws/:query', function  (req, res) {
-	res.contentType('application/json');
-    return res.json(stub_find_in_laws(req.params.query));
-});
+app.get('/laws/:query', lawsdb.find_in_laws);
 
 function stub_find_in_laws (query) {
 	var law_fake = {
@@ -18,7 +16,6 @@ function stub_find_in_laws (query) {
 	law_fake_JSON = law_fake;
 	return law_fake_JSON;
 }
-
 
 var port = process.env.PORT || 3000;
 app.listen(port);
